@@ -15,7 +15,7 @@ Booker is licensed under the Apache 2.0 license.  See [LICENSE](LICENSE.md) for 
 Initial Author: Aaron Powers <caaronpowers@gmail.com>
 
 ## Installation
-See instructions [here](https://github.com/aaronpowers10/Rufus/wiki/Installation).
+See instructions [here](https://github.com/aaronpowers10/Booker/wiki/Installation).
 
 ## Documentation
-Documentation can be found on the project [wiki](https://github.com/aaronpowers10/Rufus/wiki).
+Documentation can be found on the project [wiki](https://github.com/aaronpowers10/Booker/wiki).
