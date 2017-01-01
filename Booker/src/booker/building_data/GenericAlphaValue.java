@@ -18,13 +18,19 @@ public abstract class GenericAlphaValue <T extends BuildingObject<T,U,V>, U exte
 
 	public GenericAlphaValue(String value){
 		this.value = value;
+		alphaChecker = new AllowAnyAlphaChecker();
+	}
+	
+	public void setAlphaValueChecker(AlphaValueChecker alphaChecker){
+		this.alphaChecker = alphaChecker;
 	}
 
 	public String value(){
 		return value;
 	}
 
-	public void setValue(String value) throws BuildingDataException{
+	@Override
+	public void set(String value) throws BuildingDataException{
 		if(alphaChecker.isAllowed(value)){
 			this.value = value;
 		} else {
