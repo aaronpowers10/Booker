@@ -2,8 +2,9 @@ package booker.building_data;
 
 /**
  * 
- * A building object is a building block to an entire building/project definition.  An object has
- * a list of fields which define the properties of that object.
+ * A building object is a building block to an entire building/project
+ * definition. An object has a list of fields which define the properties of
+ * that object.
  * 
  * @author Aaron Powers
  *
@@ -12,7 +13,8 @@ package booker.building_data;
  * @param <V>
  */
 
-public interface BuildingObject<T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> extends HoldsObjectReferences<T,U,V> {
+public interface BuildingObject<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
+		extends HoldsObjectReferences<T, U, V>, ObjectDeleteListener<T, U, V> {
 
 	public String name();
 

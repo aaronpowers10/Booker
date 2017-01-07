@@ -66,6 +66,10 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 	public T get(String name){
 		return objects.get(name);
 	}
+	
+	public void addDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+		objects.addDeleteListener(deleteListener);
+	}
 
 	public boolean isMember(String name){
 		return objects.isMember(name);

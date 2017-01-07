@@ -18,9 +18,14 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		objects = new ArrayList<T>();
 		deleteListeners = new ArrayList<ObjectDeleteListener<T,U,V>>();
 	}
+	
+	public void addDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+		deleteListeners.add(deleteListener);
+	}
 
 	public void add(T object) {
 		objects.add(object);
+		
 	}
 
 	public void add(int index, T object) {
