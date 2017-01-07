@@ -67,6 +67,10 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		objects.remove(deleteIndex);
 		notifyDeleteListeners(object);
 	}
+	
+	public void delete(String name){
+		delete(get(name));
+	}
 
 	private void notifyDeleteListeners(T object) {
 		for (int i = 0; i < deleteListeners.size(); i++) {

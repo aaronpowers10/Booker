@@ -29,20 +29,27 @@ public abstract class ListValue <T extends BuildingObject<T,U,V>, U extends Buil
 	public V get(int index){
 		return elements.get(index);
 	}
+	
+	public void set(int index, V element){
+		elements.set(index, element);
+	}
 
 	public int size(){
 		return elements.size();
 	}
 
-	public void set(int index, double value) throws BuildingDataException{
+	@Override
+	public void set(int index, double value){
 		elements.get(index).set(value);
 	}
 
-	public void set(int index, String string) throws BuildingDataException{
+	@Override
+	public void set(int index, String string){
 		elements.get(index).set(string);
 	}
 
-	public void set(int index, T object) throws BuildingDataException{
+	@Override
+	public void set(int index, T object){
 		elements.get(index).set(object);
 	}
 

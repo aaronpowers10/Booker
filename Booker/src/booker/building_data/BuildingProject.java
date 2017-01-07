@@ -63,6 +63,10 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 	public void delete(T object){
 		objects.delete(object);
 	}
+	
+	public void delete(String name){
+		objects.delete(name);
+	}
 
 	public int indexOf(T object){
 		return objects.indexOf(object);
