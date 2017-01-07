@@ -10,63 +10,61 @@ package booker.building_data;
 
 import java.util.ArrayList;
 
-public abstract class ListValue <T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> implements FieldValue<T,U,V>{
+public abstract class ListValue<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
+		implements FieldValue<T, U, V> {
 
 	private ArrayList<V> elements;
 
-	public ListValue(){
+	public ListValue() {
 		elements = new ArrayList<V>();
 	}
 
-	public ListValue(ArrayList<V> elements){
+	public ListValue(ArrayList<V> elements) {
 		this.elements = elements;
 	}
 
-	public void add(V element){
+	public void add(V element) {
 		elements.add(element);
 	}
 
-	public V get(int index){
+	public V get(int index) {
 		return elements.get(index);
 	}
-	
-	public void set(int index, V element){
+
+	public void set(int index, V element) {
 		elements.set(index, element);
 	}
 
-	public int size(){
+	public int size() {
 		return elements.size();
 	}
 
 	@Override
-	public void set(int index, double value){
+	public void set(int index, double value) {
 		elements.get(index).set(value);
 	}
 
 	@Override
-	public void set(int index, String string){
+	public void set(int index, String string) {
 		elements.get(index).set(string);
 	}
 
 	@Override
-	public void set(int index, T object){
+	public void set(int index, T object) {
 		elements.get(index).set(object);
 	}
-
 
 	@Override
 	public GenericValueType type() {
 		return GenericValueType.LIST;
 	}
-
-	@Override
-	public boolean dependsOn(T object) {
-		for(int i=0; i<elements.size(); i++){
-			if(elements.get(i).dependsOn(object)){
-				return true;
-			}
+	
+	public void objectDeleted(T object){
+		for(int i=0;i<size();i++){
+			if(get(i) instanceof GenericObjectValue){
+				((GenericObjectValue<T,U,V>)get(i)).objectDeleted(object);
+			} 
 		}
-		return false;
 	}
 
 }

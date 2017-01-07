@@ -22,6 +22,10 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 	public void addDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
 		deleteListeners.add(deleteListener);
 	}
+	
+	public void removeDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+		deleteListeners.remove(deleteListener);
+	}
 
 	public void add(T object) {
 		objects.add(object);
@@ -122,15 +126,6 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 			}
 		}
 		return list;
-	}
-
-	public boolean anyObjectsDependOn(T object){
-		for (int i = 0; i < objects.size(); i++) {
-			if(objects.get(i).dependsOn(object)){
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public ObjectList<T,U,V> copy(){

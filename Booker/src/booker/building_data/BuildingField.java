@@ -10,7 +10,7 @@ package booker.building_data;
  * @param <V>
  */
 
-public interface BuildingField<T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> extends HoldsObjectReferences<T,U,V>{
+public interface BuildingField<T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> {
 
 	public String name();
 
@@ -58,11 +58,6 @@ public interface BuildingField<T extends BuildingObject<T,U,V>, U extends Buildi
 
 	public default void add(V element)throws BuildingDataException{
 		value().add(element);
-	}
-
-	@Override
-	public default boolean dependsOn(T object){
-		return value().dependsOn(object);
 	}
 
 	public U copy();

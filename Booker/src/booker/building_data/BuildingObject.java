@@ -14,7 +14,7 @@ package booker.building_data;
  */
 
 public interface BuildingObject<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		extends HoldsObjectReferences<T, U, V>, ObjectDeleteListener<T, U, V> {
+		extends ObjectDeleteListener<T, U, V> {
 
 	public String name();
 
@@ -35,18 +35,19 @@ public interface BuildingObject<T extends BuildingObject<T, U, V>, U extends Bui
 
 	public int numFields();
 
-	@Override
-	public default boolean dependsOn(T object) {
-		for (int i = 0; i < numFields(); i++) {
-			if (getField(i).dependsOn(object)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public boolean hasField(String fieldName);
 
 	public T copy();
+	
+	@Override
+	public default void objectDeleted(T object){
+		for(int i=0;i<numFields();i++){
+			if(getField(i).value() instanceof GenericObjectValue){
+				((GenericObjectValue<T,U,V>)getField(i).value()).objectDeleted(object);
+			} else if(getField(i).value() instanceof ListValue){
+				((ListValue<T,U,V>)getField(i).value()).objectDeleted(object);
+			}
+		}
+	}
 
 }

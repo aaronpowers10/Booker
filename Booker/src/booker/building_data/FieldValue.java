@@ -17,7 +17,7 @@ package booker.building_data;
  * @param <V>
  */
 
-public interface FieldValue <T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> extends HoldsObjectReferences<T,U,V>{
+public interface FieldValue <T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> {
 
 	public ValueType type();
 
@@ -107,11 +107,6 @@ public interface FieldValue <T extends BuildingObject<T,U,V>, U extends Building
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
-	}
-
-	@Override
-	public default boolean dependsOn(T object) {
-		return false;
 	}
 
 	public V copy();

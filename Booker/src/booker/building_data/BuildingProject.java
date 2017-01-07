@@ -37,6 +37,7 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 
 	public void add(T object, AddObjectStrategy<T,U,V> addStrategy){
 		objects.add(object,addStrategy);
+		objects.addDeleteListener(object);
 	}
 	
 	public void addBeforeFirstInstance(T object, String beforeType){
@@ -67,8 +68,12 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 		return objects.get(name);
 	}
 	
-	public void addDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+	public void addObjectDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
 		objects.addDeleteListener(deleteListener);
+	}
+	
+	public void removeObjectDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+		objects.removeDeleteListener(deleteListener);
 	}
 
 	public boolean isMember(String name){
@@ -81,10 +86,11 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 
 	public void delete(T object){
 		objects.delete(object);
+		objects.removeDeleteListener(object);
 	}
 	
 	public void delete(String name){
-		objects.delete(name);
+		delete(objects.get(name));
 	}
 
 	public int indexOf(T object){
@@ -101,10 +107,6 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 
 	public ObjectList<T,U,V> getList(ObjectFilter<T,U,V> filter){
 		return objects.getList(filter);
-	}
-
-	public boolean anyObjectsDependOn(T object){
-		return objects.anyObjectsDependOn(object);
 	}
 
 	public abstract BuildingProject<T,U,V> copy();
