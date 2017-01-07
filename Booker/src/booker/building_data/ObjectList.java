@@ -1,42 +1,53 @@
-package booker.building_data;
-
-/**
- * 
- * Represents a list of building objects.
- * 
- * @author Aaron Powers
+/*
+ *
+ *  Copyright (C) 2017 Aaron Powers
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
+
+package booker.building_data;
 
 import java.util.ArrayList;
 
-public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> {
+public class ObjectList<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
 
 	private ArrayList<T> objects;
-	private ArrayList<ObjectDeleteListener<T,U,V>> deleteListeners;
+	private ArrayList<ObjectDeleteListener<T, U, V>> deleteListeners;
 
 	public ObjectList() {
 		objects = new ArrayList<T>();
-		deleteListeners = new ArrayList<ObjectDeleteListener<T,U,V>>();
+		deleteListeners = new ArrayList<ObjectDeleteListener<T, U, V>>();
 	}
-	
-	public void addDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+
+	public void addDeleteListener(ObjectDeleteListener<T, U, V> deleteListener) {
 		deleteListeners.add(deleteListener);
 	}
-	
-	public void removeDeleteListener(ObjectDeleteListener<T,U,V> deleteListener){
+
+	public void removeDeleteListener(ObjectDeleteListener<T, U, V> deleteListener) {
 		deleteListeners.remove(deleteListener);
 	}
 
 	public void add(T object) {
 		objects.add(object);
-		
+
 	}
 
 	public void add(int index, T object) {
 		objects.add(index, object);
 	}
 
-	public void add(T object, AddObjectStrategy<T,U,V> addStrategy) {
+	public void add(T object, AddObjectStrategy<T, U, V> addStrategy) {
 		addStrategy.addToProject(object, this);
 	}
 
@@ -44,7 +55,7 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		return objects.get(index);
 	}
 
-	public T get(String name) throws BuildingDataException{
+	public T get(String name) throws BuildingDataException {
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects.get(i).name().equals(name)) {
 				return objects.get(i);
@@ -76,8 +87,8 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		objects.remove(deleteIndex);
 		notifyDeleteListeners(object);
 	}
-	
-	public void delete(String name){
+
+	public void delete(String name) {
 		delete(get(name));
 	}
 
@@ -96,8 +107,8 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		return -1;
 	}
 
-	public ObjectList<T,U,V> getTypeList(String type) {
-		ObjectList<T,U,V> typeList = new ObjectList<T,U,V>();
+	public ObjectList<T, U, V> getTypeList(String type) {
+		ObjectList<T, U, V> typeList = new ObjectList<T, U, V>();
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects.get(i).type().equals(type)) {
 				typeList.add(objects.get(i));
@@ -106,8 +117,8 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		return typeList;
 	}
 
-	public ObjectList<T,U,V> getTypeList(String type, ObjectFilter<T,U,V> filter) throws BuildingDataException{
-		ObjectList<T,U,V> typeList = new ObjectList<T,U,V>();
+	public ObjectList<T, U, V> getTypeList(String type, ObjectFilter<T, U, V> filter) throws BuildingDataException {
+		ObjectList<T, U, V> typeList = new ObjectList<T, U, V>();
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects.get(i).type().equals(type)) {
 				if (filter.filter(objects.get(i))) {
@@ -118,8 +129,8 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		return typeList;
 	}
 
-	public ObjectList<T,U,V> getList(ObjectFilter<T,U,V> filter) throws BuildingDataException{
-		ObjectList<T,U,V> list = new ObjectList<T,U,V>();
+	public ObjectList<T, U, V> getList(ObjectFilter<T, U, V> filter) throws BuildingDataException {
+		ObjectList<T, U, V> list = new ObjectList<T, U, V>();
 		for (int i = 0; i < objects.size(); i++) {
 			if (filter.filter(objects.get(i))) {
 				list.add(objects.get(i));
@@ -128,9 +139,9 @@ public class ObjectList<T extends BuildingObject<T,U,V>, U extends BuildingField
 		return list;
 	}
 
-	public ObjectList<T,U,V> copy(){
-		ObjectList<T,U,V> copyList = new ObjectList<T,U,V>();
-		for(int i=0;i<copyList.size();i++){
+	public ObjectList<T, U, V> copy() {
+		ObjectList<T, U, V> copyList = new ObjectList<T, U, V>();
+		for (int i = 0; i < copyList.size(); i++) {
 			copyList.add(objects.get(i).copy());
 		}
 		return copyList;

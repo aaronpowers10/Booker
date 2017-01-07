@@ -1,8 +1,22 @@
-package booker.lexical;
-
-/**
- * @author Aaron Powers
+/*
+ *
+ *  Copyright (C) 2017 Aaron Powers
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
+
+package booker.lexical;
 
 import java.util.ArrayList;
 
@@ -15,7 +29,7 @@ public class InputSequence {
 	private int lastLine;
 	private MoreCharactersSource moreChars;
 
-	public InputSequence(int maxColumn){
+	public InputSequence(int maxColumn) {
 		this.maxColumn = maxColumn;
 		chars = new ArrayList<InputToken>();
 		readIndex = 0;
@@ -33,9 +47,9 @@ public class InputSequence {
 		moreChars = new FileLink(fileName);
 	}
 
-	public void addChar(String newChar){
+	public void addChar(String newChar) {
 		if (lastColumn <= maxColumn || newChar.equals("\r") || newChar.equals("\n")) {
-			chars.add(new InputToken(newChar,lastLine,lastColumn));
+			chars.add(new InputToken(newChar, lastLine, lastColumn));
 		}
 
 		if (newChar.equals("\n")) {
@@ -46,12 +60,12 @@ public class InputSequence {
 		}
 	}
 
-	public void reset(){
+	public void reset() {
 		readIndex = 0;
 	}
 
 	protected String token() {
-		while(readIndex > chars.size() -1){
+		while (readIndex > chars.size() - 1) {
 			addChar(moreChars.nextChar());
 		}
 		return chars.get(readIndex).token();
@@ -61,7 +75,7 @@ public class InputSequence {
 		return chars.get(readIndex).lineNumber();
 	}
 
-	public int col(){
+	public int col() {
 		return chars.get(readIndex).col();
 	}
 
@@ -69,23 +83,23 @@ public class InputSequence {
 		readIndex++;
 	}
 
-	protected String peek(int offset){
+	protected String peek(int offset) {
 		return chars.get(readIndex + offset).token();
 	}
 
-	protected int pos(){
+	protected int pos() {
 		return readIndex;
 	}
 
-	protected void moveTo(int pos){
+	protected void moveTo(int pos) {
 		this.readIndex = pos;
 	}
 
-	public int maxColumn(){
+	public int maxColumn() {
 		return maxColumn;
 	}
 
-	class NullCharactersSource implements MoreCharactersSource{
+	class NullCharactersSource implements MoreCharactersSource {
 
 		@Override
 		public String nextChar() {
