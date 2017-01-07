@@ -11,8 +11,10 @@ public class SetReferenceNullDeleteListener<T extends BuildingObject<T, U, V>, U
 
 	@Override
 	public void objectDeleted(T object) {
-		if (this.objectValue.value().equals(object)) {
-			objectValue.setValue(null);
+		if(objectValue.value()  != null){
+			if (objectValue.value().equals(object)) {
+				objectValue.setValue(null);
+			}
 		}
 
 	}
