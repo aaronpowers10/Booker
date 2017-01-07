@@ -39,8 +39,23 @@ public abstract class BuildingProject<T extends BuildingObject<T,U,V>, U extends
 		objects.add(object,addStrategy);
 	}
 	
-	public void add(T object, String beforeType){
+	public void addBeforeFirstInstance(T object, String beforeType){
 		AddBeforeFirstInstanceStrategy<T,U,V> addStrategy = new AddBeforeFirstInstanceStrategy<T,U,V>(beforeType);
+		add(object,addStrategy);
+	}
+	
+	public void addAfterLastInstance(T object, String afterType){
+		AddAfterLastInstanceStrategy<T,U,V> addStrategy = new AddAfterLastInstanceStrategy<T,U,V>(afterType);
+		add(object,addStrategy);
+	}
+	
+	public void addBeforeObject(T object, String objectName){
+		AddBeforeObjectStrategy<T,U,V> addStrategy = new AddBeforeObjectStrategy<T,U,V>(objectName);
+		add(object,addStrategy);
+	}
+	
+	public void addAfterObject(T object, String objectName){
+		AddAfterObjectStrategy<T,U,V> addStrategy = new AddAfterObjectStrategy<T,U,V>(objectName);
 		add(object,addStrategy);
 	}
 
