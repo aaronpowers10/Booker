@@ -26,6 +26,6 @@ public interface ObjectFilter<T extends BuildingObject<T, U, V>, U extends Build
 	 * @param object
 	 * @return
 	 */
-	public boolean filter(T object) throws BuildingDataException;
+	public boolean filter(T object);
 
 }
