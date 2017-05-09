@@ -1,10 +1,10 @@
 # Booker
 
-Booker is an API for working with object-oriented building simulation engines  with text-based input files.  It contains packages for lexical analysis and handling of generic building data.
+Booker is an API for working with object-oriented building simulation engines  with text-based input files.
 
 ## Dependencies
 
-None
+[Otis](https://github.com/aaronpowers10/Otis)
 
 ## License
 
