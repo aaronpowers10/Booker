@@ -20,8 +20,8 @@ package booker.building_data;
 
 import java.util.ArrayList;
 
-import booker.lexical.CannotParseException;
-import booker.lexical.InputSequence;
+import otis.lexical.CannotParseException;
+import otis.lexical.InputSequence;
 
 public abstract class BuildingParser<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>, W extends Parsable> {
 
