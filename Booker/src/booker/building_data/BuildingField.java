@@ -35,9 +35,21 @@ public interface BuildingField<T extends BuildingObject<T, U, V>, U extends Buil
 	public default GenericAlphaValue<T, U, V> getAsGenericAlpha() {
 		return value().getAsGenericAlpha();
 	}
+	
+	public default GenericAlphaValue<T,U,V> getAsGenericAlpha(int index){
+		return value().getAsGenericAlpha(index);
+	}
+	
+	public default GenericNumericValue<T,U,V> getAsGenericNumeric(int index){
+		return value().getAsGenericNumeric(index);
+	}
 
 	public default GenericObjectValue<T, U, V> getAsGenericObject() {
 		return value().getAsGenericObject();
+	}
+	
+	public default ListValue<T,U,V> getAsGenericList(){
+		return value().getAsList();
 	}
 
 	public default void set(double value) {

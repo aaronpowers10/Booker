@@ -36,7 +36,7 @@ public interface BuildingObject<T extends BuildingObject<T, U, V>, U extends Bui
 
 	public U getField(int index);
 
-	public void addField(U field);
+//	public void addField(U field);
 
 	public int numFields();
 

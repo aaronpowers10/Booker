@@ -37,6 +37,22 @@ public interface FieldValue<T extends BuildingObject<T, U, V>, U extends Buildin
 			throw new BuildingDataException("The field is not an alpha type.");
 		}
 	}
+	
+	public default GenericAlphaValue<T,U,V> getAsGenericAlpha(int index) throws BuildingDataException{
+		if(this.getAsList().get(index) instanceof GenericAlphaValue){
+			return (GenericAlphaValue<T,U,V>)this.getAsList().get(index);
+		} else {
+			throw new BuildingDataException("The field is not an alpha type.");
+		}
+	}
+	
+	public default GenericNumericValue<T,U,V> getAsGenericNumeric(int index) throws BuildingDataException{
+		if(this.getAsList().get(index) instanceof GenericNumericValue){
+			return (GenericNumericValue<T,U,V>)this.getAsList().get(index);
+		} else {
+			throw new BuildingDataException("The field is not a numeric type.");
+		}
+	}
 
 	public default GenericObjectValue<T, U, V> getAsGenericObject() throws BuildingDataException {
 		if (this instanceof GenericObjectValue) {
