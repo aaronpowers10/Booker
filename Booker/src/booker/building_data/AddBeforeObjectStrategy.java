@@ -18,21 +18,21 @@
 
 package booker.building_data;
 
-public class AddBeforeObjectStrategy<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements AddObjectStrategy<T, U, V> {
+public class AddBeforeObjectStrategy<T extends Namespace>
+		implements AddNamespaceStrategy<T> {
 
-	private String objectName;
+	private String addBeforeName;
 
-	public AddBeforeObjectStrategy(String objectName) {
-		this.objectName = objectName;
+	public AddBeforeObjectStrategy(String addBeforeName) {
+		this.addBeforeName = addBeforeName;
 	}
 
 	@Override
-	public void addToProject(T object, ObjectList<T, U, V> objects) {
-		int objectsSize = objects.size();
+	public void addToProject(T item, NamespaceList<T> list) {
+		int objectsSize = list.size();
 		for (int i = 0; i < objectsSize; i++) {
-			if (objects.get(i).name().equals(objectName)) {
-				objects.add(i, object);
+			if (list.get(i).name().equals(addBeforeName)) {
+				list.add(i, item);
 				break;
 			}
 		}

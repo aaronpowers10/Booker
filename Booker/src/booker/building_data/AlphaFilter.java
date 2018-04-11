@@ -18,7 +18,7 @@
 
 package booker.building_data;
 
-public class AlphaFilter<T extends BuildingObject<T,U,V>, U extends BuildingField<T,U,V>, V extends FieldValue<T,U,V>> implements ObjectFilter<T,U,V> {
+public class AlphaFilter implements NamespaceFilter<BookerObject> {
 	
 	private String fieldName;
 	private String matchString;
@@ -29,10 +29,10 @@ public class AlphaFilter<T extends BuildingObject<T,U,V>, U extends BuildingFiel
 	}
 
 	@Override
-	public boolean filter(T object) throws BuildingDataException {
+	public boolean filter(BookerObject object) throws BuildingDataException {
 		if(object.hasField(fieldName)){
-			U field = object.getField(fieldName);
-			if(field.getAsGenericAlpha().value().equals(matchString)){
+			BookerField field = object.getField(fieldName);
+			if(field.getAsAlpha().value().equals(matchString)){
 				return true;
 			} else {
 				return false;

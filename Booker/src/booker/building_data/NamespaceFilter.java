@@ -18,8 +18,14 @@
 
 package booker.building_data;
 
-public interface NumericChecker {
+public interface NamespaceFilter<T extends Namespace> {
 
-	public boolean isAllowed(double value);
+	/**
+	 * Returns true if the item passes the filter.
+	 *
+	 * @param item
+	 * @return
+	 */
+	public boolean filter(T item);
 
 }

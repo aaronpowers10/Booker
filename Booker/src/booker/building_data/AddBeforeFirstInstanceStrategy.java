@@ -18,8 +18,8 @@
 
 package booker.building_data;
 
-public class AddBeforeFirstInstanceStrategy<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements AddObjectStrategy<T, U, V> {
+public class AddBeforeFirstInstanceStrategy
+		implements AddNamespaceStrategy<BookerObject> {
 
 	private String type;
 
@@ -34,7 +34,7 @@ public class AddBeforeFirstInstanceStrategy<T extends BuildingObject<T, U, V>, U
 	}
 
 	@Override
-	public void addToProject(T object, ObjectList<T, U, V> objects) {
+	public void addToProject(BookerObject object, NamespaceList<BookerObject> objects) {
 		int objectsSize = objects.size();
 		for (int i = 0; i < objectsSize; i++) {
 			if (objects.get(i).type().equals(type)) {

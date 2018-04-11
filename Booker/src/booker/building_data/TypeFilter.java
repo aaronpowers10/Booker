@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2017 Aaron Powers
+ *  Copyright (C) 2018 Aaron Powers
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,11 +15,23 @@
  *  limitations under the License.
  *
  */
-
 package booker.building_data;
 
-public interface ObjectLoadListener<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
+public class TypeFilter implements NamespaceFilter<BookerObject> {
+	
+	private String type;
+	
+	public TypeFilter(String type){
+		this.type = type;
+	}
 
-	public void notifyObjectLoadingComplete(ObjectReferences<T, U, V> objects);
+	@Override
+	public boolean filter(BookerObject object) throws BuildingDataException {
+		if(object.type().equals(type)){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

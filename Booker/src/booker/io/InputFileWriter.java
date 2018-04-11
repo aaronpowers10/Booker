@@ -16,9 +16,12 @@
  *
  */
 
-package booker.building_data;
+package booker.io;
 
-public interface AddObjectStrategy<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
+import booker.io.OutputSequence;
 
-	public void addToProject(T object, ObjectList<T, U, V> objects);
+public interface InputFileWriter {
+
+	public void write(OutputSequence out);
+
 }

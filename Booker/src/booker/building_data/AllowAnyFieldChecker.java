@@ -18,11 +18,11 @@
 
 package booker.building_data;
 
-public class AllowAnyFieldChecker<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements FieldChecker<T, U, V> {
+public class AllowAnyFieldChecker
+		implements FieldChecker {
 
 	@Override
-	public boolean isAllowed(U field, T object) {
+	public boolean isAllowed(BookerField field, BookerObject object) {
 		return true;
 	}
 

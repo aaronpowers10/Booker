@@ -18,14 +18,26 @@
 
 package booker.building_data;
 
-public abstract class GenericAlphaValue<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements FieldValue<T, U, V> {
+import booker.io.InputFileWriter;
+import booker.io.NullWriter;
+import booker.io.OutputSequence;
+
+public class AlphaValue
+		implements FieldValue {
 
 	private String value;
 	private AlphaValueChecker alphaChecker;
+	private InputFileWriter writer;
 
-	public GenericAlphaValue(String value) {
+	public AlphaValue(String value) {
 		this.value = value;
+		alphaChecker = new AllowAnyAlphaChecker();
+		writer = new NullWriter();
+	}
+	
+	public AlphaValue(String value, InputFileWriter writer){
+		this.value = value;
+		this.writer = writer;
 		alphaChecker = new AllowAnyAlphaChecker();
 	}
 
@@ -48,7 +60,22 @@ public abstract class GenericAlphaValue<T extends BuildingObject<T, U, V>, U ext
 
 	@Override
 	public ValueType type() {
-		return GenericValueType.ALPHA;
+		return ValueType.ALPHA;
+	}
+
+	@Override
+	public AlphaValue copy() {
+		return new AlphaValue(value);
+	}
+
+
+	public void setWriter(InputFileWriter writer){
+		this.writer = writer;
+	}
+	
+	@Override
+	public void write(OutputSequence out) {
+		writer.write(out);
 	}
 
 }

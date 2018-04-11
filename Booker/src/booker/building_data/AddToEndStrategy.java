@@ -18,12 +18,12 @@
 
 package booker.building_data;
 
-public class AddToEndStrategy<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements AddObjectStrategy<T, U, V> {
+public class AddToEndStrategy<T extends Namespace>
+		implements AddNamespaceStrategy<T> {
 
 	@Override
-	public void addToProject(T object, ObjectList<T, U, V> objects) {
-		objects.add(object);
+	public void addToProject(T item, NamespaceList<T> list) {
+		list.add(item);
 	}
 
 }

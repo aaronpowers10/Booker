@@ -18,11 +18,12 @@
 
 package booker.building_data;
 
-public class ConsoleUpdateListener implements UpdateListener {
+public interface NamespaceReferences<T extends Namespace> {
 
-	@Override
-	public void update(String message) {
-		System.out.println(message);
-	}
+	public T get(String name) throws BuildingDataException;
+
+	public void addLoadListener(NamespaceLoadListener<T> loadListener);
+
+	public void notifyLoadComplete();
 
 }

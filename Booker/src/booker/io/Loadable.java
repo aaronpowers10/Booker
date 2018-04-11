@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2017 Aaron Powers
+ *  Copyright (C) 2018 Aaron Powers
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,26 +15,13 @@
  *  limitations under the License.
  *
  */
+package booker.io;
 
-package booker.building_data;
+import booker.building_data.Namespace;
+import booker.building_data.NamespaceList;
 
-public class SetReferenceNullDeleteListener
-		implements NamespaceDeleteListener<BookerObject> {
-
-	private ObjectValue objectValue;
-
-	public SetReferenceNullDeleteListener(ObjectValue objectValue) {
-		this.objectValue = objectValue;
-	}
-
-	@Override
-	public void itemDeleted(BookerObject object) {
-		if (objectValue.value() != null) {
-			if (objectValue.value().equals(object)) {
-				objectValue.setValue(null);
-			}
-		}
-
-	}
+public interface Loadable<T extends Namespace, U extends Namespace> {
+	
+	public void read(T data, NamespaceList<U> references);
 
 }

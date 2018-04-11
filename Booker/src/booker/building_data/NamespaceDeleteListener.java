@@ -18,8 +18,8 @@
 
 package booker.building_data;
 
-public interface ObjectDeleteListener<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
+public interface NamespaceDeleteListener<T extends Namespace> {
 
-	public void objectDeleted(T object);
+	public void itemDeleted(T item);
 
 }

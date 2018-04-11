@@ -16,14 +16,18 @@
  *
  */
 
-package booker.building_data;
+package booker.io;
 
 import java.util.ArrayList;
 
+import booker.building_data.Namespace;
+import booker.building_data.NamespaceReferences;
 import otis.lexical.CannotParseException;
 import otis.lexical.InputSequence;
+import otis.lexical.Parsable;
+import otis.lexical.UpdateListener;
 
-public abstract class BuildingParser<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>, W extends Parsable> {
+public abstract class BuildingParser<T extends Namespace>{
 
 	private ArrayList<UpdateListener> listeners;
 
@@ -35,13 +39,13 @@ public abstract class BuildingParser<T extends BuildingObject<T, U, V>, U extend
 		listeners.add(listener);
 	}
 
-	public W parseWithMessage(InputSequence in, ObjectReferences<T, U, V> objects) throws CannotParseException {
-		W parsable = parse(in, objects);
+	public Parsable parseWithMessage(InputSequence in, NamespaceReferences<T> objects) throws CannotParseException {
+		Parsable parsable = parse(in, objects);
 		notifyListeners();
 		return parsable;
 	}
 
-	public abstract W parse(InputSequence in, ObjectReferences<T, U, V> objects) throws CannotParseException;
+	public abstract Parsable parse(InputSequence in, NamespaceReferences<T> objects) throws CannotParseException;
 
 	public abstract String message();
 

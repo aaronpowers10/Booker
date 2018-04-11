@@ -18,6 +18,8 @@
 
 package booker.building_data;
 
-public interface ValueType {
+public enum ValueType {
+	
+	INTEGER, REAL, ALPHA, OBJECT, LIST;
 
 }

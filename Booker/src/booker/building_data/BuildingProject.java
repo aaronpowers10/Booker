@@ -20,65 +20,64 @@ package booker.building_data;
 
 import java.util.ArrayList;
 
-public abstract class BuildingProject<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements ObjectReferences<T, U, V> {
+public class BuildingProject implements NamespaceReferences<BookerObject> {
 
-	private ObjectList<T, U, V> objects;
-	private ObjectList<T, U, V> libraryObjects;
-	private ArrayList<ObjectLoadListener<T, U, V>> objectLoadListeners;
+	private NamespaceList<BookerObject> objects;
+	private NamespaceList<BookerObject> libraryObjects;
+	private ArrayList<NamespaceLoadListener<BookerObject>> objectLoadListeners;
 
 	public BuildingProject() {
-		objects = new ObjectList<T, U, V>();
-		libraryObjects = new ObjectList<T, U, V>();
-		objectLoadListeners = new ArrayList<ObjectLoadListener<T, U, V>>();
+		objects = new NamespaceList<BookerObject>();
+		libraryObjects = new NamespaceList<BookerObject>();
+		objectLoadListeners = new ArrayList<NamespaceLoadListener<BookerObject>>();
 	}
 
-	public void add(T object) {
-		add(object, new AddToEndStrategy<T, U, V>());
+	public void add(BookerObject object) {
+		add(object, new AddToEndStrategy<BookerObject>());
 	}
 
-	public void addLibraryObject(T object) {
+	public void addLibraryObject(BookerObject object) {
 		libraryObjects.add(object);
 	}
 
-	public void add(T object, AddObjectStrategy<T, U, V> addStrategy) {
+	public void add(BookerObject object, AddNamespaceStrategy<BookerObject> addStrategy) {
 		objects.add(object, addStrategy);
 		objects.addDeleteListener(object);
 	}
 
-	public void addBeforeFirstInstance(T object, String beforeType) {
-		AddBeforeFirstInstanceStrategy<T, U, V> addStrategy = new AddBeforeFirstInstanceStrategy<T, U, V>(beforeType);
+	public void addBeforeFirstInstance(BookerObject object, String beforeType) {
+		AddBeforeFirstInstanceStrategy addStrategy = new AddBeforeFirstInstanceStrategy(beforeType);
 		add(object, addStrategy);
 	}
 
-	public void addAfterLastInstance(T object, String afterType) {
-		AddAfterLastInstanceStrategy<T, U, V> addStrategy = new AddAfterLastInstanceStrategy<T, U, V>(afterType);
+	public void addAfterLastInstance(BookerObject object, String afterType) {
+		AddAfterLastInstanceStrategy addStrategy = new AddAfterLastInstanceStrategy(afterType);
 		add(object, addStrategy);
 	}
 
-	public void addBeforeObject(T object, String objectName) {
-		AddBeforeObjectStrategy<T, U, V> addStrategy = new AddBeforeObjectStrategy<T, U, V>(objectName);
+	public void addBeforeObject(BookerObject object, String objectName) {
+		AddBeforeObjectStrategy<BookerObject> addStrategy = new AddBeforeObjectStrategy<BookerObject>(objectName);
 		add(object, addStrategy);
 	}
 
-	public void addAfterObject(T object, String objectName) {
-		AddAfterObjectStrategy<T, U, V> addStrategy = new AddAfterObjectStrategy<T, U, V>(objectName);
+	public void addAfterObject(BookerObject object, String objectName) {
+		AddAfterObjectStrategy<BookerObject> addStrategy = new AddAfterObjectStrategy<BookerObject>(objectName);
 		add(object, addStrategy);
 	}
 
-	public T get(int index) {
+	public BookerObject get(int index) {
 		return objects.get(index);
 	}
 
-	public T get(String name) {
+	public BookerObject get(String name) {
 		return objects.get(name);
 	}
 
-	public void addObjectDeleteListener(ObjectDeleteListener<T, U, V> deleteListener) {
+	public void addObjectDeleteListener(NamespaceDeleteListener<BookerObject> deleteListener) {
 		objects.addDeleteListener(deleteListener);
 	}
 
-	public void removeObjectDeleteListener(ObjectDeleteListener<T, U, V> deleteListener) {
+	public void removeObjectDeleteListener(NamespaceDeleteListener<BookerObject> deleteListener) {
 		objects.removeDeleteListener(deleteListener);
 	}
 
@@ -90,7 +89,7 @@ public abstract class BuildingProject<T extends BuildingObject<T, U, V>, U exten
 		return objects.size();
 	}
 
-	public void delete(T object) {
+	public void delete(BookerObject object) {
 		objects.delete(object);
 		objects.removeDeleteListener(object);
 	}
@@ -99,33 +98,35 @@ public abstract class BuildingProject<T extends BuildingObject<T, U, V>, U exten
 		delete(objects.get(name));
 	}
 
-	public int indexOf(T object) {
+	public int indexOf(BookerObject object) {
 		return objects.indexOf(object);
 	}
 
-	public ObjectList<T, U, V> getTypeList(String type) {
-		return objects.getTypeList(type);
+	public NamespaceList<BookerObject> getTypeList(String type) {
+		return objects.getList(new TypeFilter(type));
 	}
 
-	public ObjectList<T, U, V> getTypeList(String type, ObjectFilter<T, U, V> filter) {
-		return objects.getTypeList(type, filter);
-	}
-
-	public ObjectList<T, U, V> getList(ObjectFilter<T, U, V> filter) {
+	public NamespaceList<BookerObject> getList(NamespaceFilter<BookerObject> filter) {
 		return objects.getList(filter);
 	}
 
-	public abstract BuildingProject<T, U, V> copy();
+	public BuildingProject copy(){
+		BuildingProject clone = new BuildingProject();
+		for (int i = 0; i < size(); i++) {
+			clone.add(get(i).copy());
+		}
+		return clone;
+	}
 
 	@Override
-	public void addObjectLoadListener(ObjectLoadListener<T, U, V> objectLoadListener) {
+	public void addLoadListener(NamespaceLoadListener<BookerObject> objectLoadListener) {
 		objectLoadListeners.add(objectLoadListener);
 	}
 
 	@Override
-	public void notifyObjectLoadComplete() {
+	public void notifyLoadComplete() {
 		for (int i = 0; i < objectLoadListeners.size(); i++) {
-			objectLoadListeners.get(i).notifyObjectLoadingComplete(this);
+			objectLoadListeners.get(i).notifyLoadingComplete(this);
 		}
 	}
 

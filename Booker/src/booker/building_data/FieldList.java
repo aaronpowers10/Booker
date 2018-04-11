@@ -20,20 +20,22 @@ package booker.building_data;
 
 import java.util.ArrayList;
 
-public class FieldList<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
+import otis.lexical.Parsable;
+
+public class FieldList
 		implements Parsable {
 
-	private ArrayList<U> fields;
+	private ArrayList<BookerField> fields;
 
 	public FieldList() {
-		fields = new ArrayList<U>();
+		fields = new ArrayList<BookerField>();
 	}
 
-	public void add(U field) {
+	public void add(BookerField field) {
 		fields.add(field);
 	}
 
-	public U get(int index) {
+	public BookerField get(int index) {
 		return fields.get(index);
 	}
 
@@ -41,7 +43,7 @@ public class FieldList<T extends BuildingObject<T, U, V>, U extends BuildingFiel
 		fields.remove(index);
 	}
 
-	public U get(String name) throws BuildingDataException {
+	public BookerField get(String name) throws BuildingDataException {
 		for (int i = 0; i < fields.size(); i++) {
 			if (fields.get(i).name().equals(name)) {
 				return fields.get(i);

@@ -18,7 +18,8 @@
 
 package booker.building_data;
 
-public interface Parsable {
+public interface RealChecker {
 
+	public boolean isAllowed(double value);
 
 }

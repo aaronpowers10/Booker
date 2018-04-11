@@ -18,23 +18,8 @@
 
 package booker.building_data;
 
-public class SetReferenceNullDeleteListener
-		implements NamespaceDeleteListener<BookerObject> {
+public interface NamespaceLoadListener<T extends Namespace> {
 
-	private ObjectValue objectValue;
-
-	public SetReferenceNullDeleteListener(ObjectValue objectValue) {
-		this.objectValue = objectValue;
-	}
-
-	@Override
-	public void itemDeleted(BookerObject object) {
-		if (objectValue.value() != null) {
-			if (objectValue.value().equals(object)) {
-				objectValue.setValue(null);
-			}
-		}
-
-	}
+	public void notifyLoadingComplete(NamespaceReferences<T> objects);
 
 }

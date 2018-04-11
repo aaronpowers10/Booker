@@ -18,85 +18,121 @@
 
 package booker.building_data;
 
-public interface FieldValue<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
+import booker.io.InputFileWriter;
+import otis.lexical.Parsable;
+
+public interface FieldValue extends Parsable, InputFileWriter{
 
 	public ValueType type();
 
-	public default GenericNumericValue<T, U, V> getAsGenericNumeric() throws BuildingDataException {
-		if (this instanceof GenericNumericValue) {
-			return (GenericNumericValue<T, U, V>) this;
+	
+	public default IntegerValue getAsInteger() throws BuildingDataException {
+		if (this instanceof IntegerValue) {
+			return (IntegerValue) this;
 		} else {
-			throw new BuildingDataException("The field is not a numeric type.");
+			throw new BuildingDataException("The field is not an integer type.");
+		}
+	}
+	
+	public default RealValue getAsReal() throws BuildingDataException {
+		if (this instanceof RealValue) {
+			return (RealValue) this;
+		} else {
+			throw new BuildingDataException("The field is not a real type.");
 		}
 	}
 
-	public default GenericAlphaValue<T, U, V> getAsGenericAlpha() throws BuildingDataException {
-		if (this instanceof GenericAlphaValue) {
-			return (GenericAlphaValue<T, U, V>) this;
+	public default AlphaValue getAsAlpha() throws BuildingDataException {
+		if (this instanceof AlphaValue) {
+			return (AlphaValue) this;
 		} else {
 			throw new BuildingDataException("The field is not an alpha type.");
 		}
 	}
 	
-	public default GenericAlphaValue<T,U,V> getAsGenericAlpha(int index) throws BuildingDataException{
-		if(this.getAsList().get(index) instanceof GenericAlphaValue){
-			return (GenericAlphaValue<T,U,V>)this.getAsList().get(index);
+	public default AlphaValue getAsAlpha(int index) throws BuildingDataException{
+		if(this.getAsList().get(index) instanceof AlphaValue){
+			return (AlphaValue)this.getAsList().get(index);
 		} else {
 			throw new BuildingDataException("The field is not an alpha type.");
 		}
 	}
 	
-	public default GenericNumericValue<T,U,V> getAsGenericNumeric(int index) throws BuildingDataException{
-		if(this.getAsList().get(index) instanceof GenericNumericValue){
-			return (GenericNumericValue<T,U,V>)this.getAsList().get(index);
+	public default IntegerValue getAsInteger(int index) throws BuildingDataException{
+		if(this.getAsList().get(index) instanceof IntegerValue){
+			return (IntegerValue)this.getAsList().get(index);
 		} else {
-			throw new BuildingDataException("The field is not a numeric type.");
+			throw new BuildingDataException("The field is not an integer type.");
+		}
+	}
+	
+	public default RealValue getAsReal(int index) throws BuildingDataException{
+		if(this.getAsList().get(index) instanceof RealValue){
+			return (RealValue)this.getAsList().get(index);
+		} else {
+			throw new BuildingDataException("The field is not a real type.");
 		}
 	}
 
-	public default GenericObjectValue<T, U, V> getAsGenericObject() throws BuildingDataException {
-		if (this instanceof GenericObjectValue) {
-			return (GenericObjectValue<T, U, V>) this;
+	public default ObjectValue getAsObject() throws BuildingDataException {
+		if (this instanceof ObjectValue) {
+			return (ObjectValue) this;
 		} else {
 			throw new BuildingDataException("The field is not an object type.");
 		}
 	}
 
-	public default ListValue<T, U, V> getAsList() throws BuildingDataException {
+	public default ListValue getAsList() throws BuildingDataException {
 		if (this instanceof ListValue) {
-			return (ListValue<T, U, V>) this;
+			return (ListValue) this;
+		} else {
+			throw new BuildingDataException("The field is not a list type.");
+		}
+	}
+	
+	public default void set(int value) throws BuildingDataException {
+		if (this instanceof IntegerValue) {
+			((IntegerValue) this).set(value);
+		} else {
+			throw new BuildingDataException("The field is not an integer type.");
+		}
+	}
+
+	public default void set(double value) throws BuildingDataException {
+		if (this instanceof RealValue) {
+			((RealValue) this).set(value);
+		} else {
+			throw new BuildingDataException("The field is not a real type.");
+		}
+	}
+
+	public default void set(String string) throws BuildingDataException {
+		if (this instanceof AlphaValue) {
+			((AlphaValue) this).set(string);
+		} else {
+			throw new BuildingDataException("The field is not an alpha type.");
+		}
+	}
+
+	public default void set(BookerObject object) throws BuildingDataException {
+		if (this instanceof ObjectValue) {
+			((ObjectValue) this).setValue(object);
+		} else {
+			throw new BuildingDataException("The field is not an object type.");
+		}
+	}
+	
+	public default void set(int index, int value) throws BuildingDataException {
+		if (this instanceof ListValue) {
+			((ListValue) this).set(index, value);
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
 	}
 
-	public default void set(double value) throws BuildingDataException {
-		if (this instanceof GenericNumericValue) {
-			((GenericNumericValue<T, U, V>) this).set(value);
-		} else {
-			throw new BuildingDataException("The field is not a numeric type.");
-		}
-	}
-
-	public default void set(String string) throws BuildingDataException {
-		if (this instanceof GenericAlphaValue) {
-			((GenericAlphaValue<T, U, V>) this).set(string);
-		} else {
-			throw new BuildingDataException("The field is not an alpha type.");
-		}
-	}
-
-	public default void set(T object) throws BuildingDataException {
-		if (this instanceof GenericObjectValue) {
-			((GenericObjectValue<T, U, V>) this).setValue(object);
-		} else {
-			throw new BuildingDataException("The field is not an object type.");
-		}
-	}
-
 	public default void set(int index, double value) throws BuildingDataException {
 		if (this instanceof ListValue) {
-			((ListValue<T, U, V>) this).set(index, value);
+			((ListValue) this).set(index, value);
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
@@ -104,28 +140,28 @@ public interface FieldValue<T extends BuildingObject<T, U, V>, U extends Buildin
 
 	public default void set(int index, String string) throws BuildingDataException {
 		if (this instanceof ListValue) {
-			((ListValue<T, U, V>) this).set(index, string);
+			((ListValue) this).set(index, string);
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
 	}
 
-	public default void set(int index, T object) throws BuildingDataException {
+	public default void set(int index, BookerObject object) throws BuildingDataException {
 		if (this instanceof ListValue) {
-			((ListValue<T, U, V>) this).set(index, object);
+			((ListValue) this).set(index, object);
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
 	}
 
-	public default void add(V element) throws BuildingDataException {
+	public default void add(FieldValue element) throws BuildingDataException {
 		if (this instanceof ListValue) {
-			((ListValue<T, U, V>) this).add(element);
+			((ListValue) this).add(element);
 		} else {
 			throw new BuildingDataException("The field is not a list type.");
 		}
 	}
 
-	public V copy();
+	public FieldValue copy();
 
 }

@@ -18,9 +18,9 @@
 
 package booker.building_data;
 
-public interface FieldChecker<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>> {
+public interface FieldChecker {
 
-	public boolean isAllowed(U field, T Object);
+	public boolean isAllowed(BookerField field, BookerObject Object);
 
 	public String message();
 

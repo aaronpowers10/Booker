@@ -15,26 +15,10 @@
  *  limitations under the License.
  *
  */
-
 package booker.building_data;
 
-public class SetReferenceNullDeleteListener
-		implements NamespaceDeleteListener<BookerObject> {
-
-	private ObjectValue objectValue;
-
-	public SetReferenceNullDeleteListener(ObjectValue objectValue) {
-		this.objectValue = objectValue;
-	}
-
-	@Override
-	public void itemDeleted(BookerObject object) {
-		if (objectValue.value() != null) {
-			if (objectValue.value().equals(object)) {
-				objectValue.setValue(null);
-			}
-		}
-
-	}
+public interface NamespaceListCreator<T extends Namespace> {
+	
+	public NamespaceList<T> createList();
 
 }

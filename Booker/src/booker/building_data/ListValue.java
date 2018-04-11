@@ -20,28 +20,39 @@ package booker.building_data;
 
 import java.util.ArrayList;
 
-public abstract class ListValue<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements FieldValue<T, U, V> {
+import booker.io.InputFileWriter;
+import booker.io.NullWriter;
+import booker.io.OutputSequence;
 
-	private ArrayList<V> elements;
+public class ListValue implements FieldValue {
+
+	private ArrayList<FieldValue> elements;
+	private InputFileWriter writer;
 
 	public ListValue() {
-		elements = new ArrayList<V>();
+		elements = new ArrayList<FieldValue>();
+		writer = new NullWriter();
+	}
+	
+	public ListValue(InputFileWriter writer) {
+		elements = new ArrayList<FieldValue>();
+		this.writer = writer;
 	}
 
-	public ListValue(ArrayList<V> elements) {
+	public ListValue(ArrayList<FieldValue> elements) {
 		this.elements = elements;
+		writer = new NullWriter();
 	}
 
-	public void add(V element) {
+	public void add(FieldValue element) {
 		elements.add(element);
 	}
 
-	public V get(int index) {
+	public FieldValue get(int index) {
 		return elements.get(index);
 	}
 
-	public void set(int index, V element) {
+	public void set(int index, FieldValue element) {
 		elements.set(index, element);
 	}
 
@@ -60,21 +71,43 @@ public abstract class ListValue<T extends BuildingObject<T, U, V>, U extends Bui
 	}
 
 	@Override
-	public void set(int index, T object) {
+	public void set(int index, BookerObject object) {
 		elements.get(index).set(object);
+	}
+	
+	public void setValue(int index, FieldValue value){
+		elements.set(index, value);
 	}
 
 	@Override
-	public GenericValueType type() {
-		return GenericValueType.LIST;
+	public ValueType type() {
+		return ValueType.LIST;
 	}
 
-	public void objectDeleted(T object) {
+	public void objectDeleted(BookerObject object) {
 		for (int i = 0; i < size(); i++) {
-			if (get(i) instanceof GenericObjectValue) {
-				((GenericObjectValue<T, U, V>) get(i)).objectDeleted(object);
+			if (get(i) instanceof ObjectValue) {
+				((ObjectValue) get(i)).objectDeleted(object);
 			}
 		}
+	}
+
+	@Override
+	public FieldValue copy() {
+		ListValue copyValue = new ListValue();
+		for (int i = 0; i < size(); i++) {
+			copyValue.add(get(i).copy());
+		}
+		return copyValue;
+	}
+
+	public void setWriter(InputFileWriter writer){
+		this.writer = writer;
+	}
+	
+	@Override
+	public void write(OutputSequence out) {
+		writer.write(out);
 	}
 
 }

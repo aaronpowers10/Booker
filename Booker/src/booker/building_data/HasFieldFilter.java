@@ -18,8 +18,8 @@
 
 package booker.building_data;
 
-public class HasFieldFilter<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements ObjectFilter<T, U, V> {
+public class HasFieldFilter
+		implements NamespaceFilter<BookerObject> {
 
 	private String fieldName;
 
@@ -28,7 +28,7 @@ public class HasFieldFilter<T extends BuildingObject<T, U, V>, U extends Buildin
 	}
 
 	@Override
-	public boolean filter(T object) throws BuildingDataException {
+	public boolean filter(BookerObject object) throws BuildingDataException {
 		if (object.hasField(fieldName)) {
 			return true;
 		} else {

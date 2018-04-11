@@ -18,24 +18,36 @@
 
 package booker.building_data;
 
-public abstract class GenericNumericValue<T extends BuildingObject<T, U, V>, U extends BuildingField<T, U, V>, V extends FieldValue<T, U, V>>
-		implements FieldValue<T, U, V> {
+import booker.io.InputFileWriter;
+import booker.io.NullWriter;
+import booker.io.OutputSequence;
+
+public class RealValue
+		implements FieldValue {
 
 	private double value;
-	private NumericChecker numericChecker;
+	private RealChecker realChecker;
+	private InputFileWriter writer;
 
-	public GenericNumericValue(double value) {
+	public RealValue(double value) {
 		this.value = value;
-		numericChecker = new AllowAnyNumericChecker();
+		realChecker = new AllowAnyNumericChecker();
+		writer = new NullWriter();
+	}
+	
+	public RealValue(double value, InputFileWriter writer) {
+		this.value = value;
+		realChecker = new AllowAnyNumericChecker();
+		this.writer = writer;
 	}
 
-	public GenericNumericValue(double value, NumericChecker numericChecker) {
-		this.numericChecker = numericChecker;
+	public RealValue(double value, RealChecker realChecker) {
+		this.realChecker = realChecker;
 		set(value);
 	}
 
-	public void setChecker(NumericChecker numericChecker) {
-		this.numericChecker = numericChecker;
+	public void setChecker(RealChecker realChecker) {
+		this.realChecker = realChecker;
 	}
 
 	public double value() {
@@ -44,7 +56,7 @@ public abstract class GenericNumericValue<T extends BuildingObject<T, U, V>, U e
 
 	@Override
 	public void set(double value) throws BuildingDataException {
-		if (numericChecker.isAllowed(value)) {
+		if (realChecker.isAllowed(value)) {
 			this.value = value;
 		} else {
 			throw new BuildingDataException();
@@ -53,14 +65,28 @@ public abstract class GenericNumericValue<T extends BuildingObject<T, U, V>, U e
 
 	@Override
 	public ValueType type() {
-		return GenericValueType.NUMERIC;
+		return ValueType.REAL;
 	}
 
-	class AllowAnyNumericChecker implements NumericChecker {
+	class AllowAnyNumericChecker implements RealChecker {
 		@Override
 		public boolean isAllowed(double value) {
 			return true;
 		}
+	}
+
+	@Override
+	public RealValue copy() {
+		return new RealValue(value);
+	}
+	
+	public void setWriter(InputFileWriter writer){
+		this.writer = writer;
+	}
+	
+	@Override
+	public void write(OutputSequence out) {
+		writer.write(out);
 	}
 
 }
