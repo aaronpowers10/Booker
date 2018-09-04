@@ -58,7 +58,9 @@ public class BookerField implements Parsable, InputFileWriter{
 	}
 
 	public BookerField copy() {
-		return new BookerField(name,value.copy());
+		BookerField clone = new BookerField(name,value.copy());
+		clone.setWriter(writer);
+		return clone;
 	}
 
 	public  ValueType type() {

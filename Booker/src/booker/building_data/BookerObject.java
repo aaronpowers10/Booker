@@ -120,19 +120,20 @@ public class BookerObject implements NamespaceDeleteListener<BookerObject>, Pars
 
 	public BookerObject copy() {
 		BookerObject clone = new BookerObject(type, name);
+		clone.setWriter(writer);
 		for (int i = 0; i < numFields(); i++) {
 			clone.addField(fields.get(i).copy());
 		}
 		return clone;
 	}
 
-	public BookerField getField(String name) throws BuildingDataException {
+	public BookerField getField(String name) throws BookerDataException {
 		for (int i = 0; i < numFields(); i++) {
 			if (getField(i).name().equals(name)) {
 				return getField(i);
 			}
 		}
-		throw new BuildingDataException("'" + name + "' is not a field of '" + name() + "'.");
+		throw new BookerDataException("'" + name + "' is not a field of '" + name() + "'.");
 	}
 
 	@Override
@@ -155,7 +156,7 @@ public class BookerObject implements NamespaceDeleteListener<BookerObject>, Pars
 		writer.write(out);
 	}
 
-	public void addField(BookerField field) throws BuildingDataException {
+	public void addField(BookerField field) throws BookerDataException {
 		fields.add(field);
 	}
 
@@ -208,7 +209,7 @@ public class BookerObject implements NamespaceDeleteListener<BookerObject>, Pars
 				if (value.value().equals(object)) {
 					return true;
 				}
-			} catch (BuildingDataException e) {
+			} catch (BookerDataException e) {
 				try {
 					ListValue list = fields.get(i).getAsList();
 					for (int j = 0; j < list.size(); j++) {
@@ -217,11 +218,11 @@ public class BookerObject implements NamespaceDeleteListener<BookerObject>, Pars
 							if (value.value().equals(object)) {
 								return true;
 							}
-						} catch (BuildingDataException e2) {
+						} catch (BookerDataException e2) {
 
 						}
 					}
-				} catch (BuildingDataException e2) {
+				} catch (BookerDataException e2) {
 
 				}
 			}

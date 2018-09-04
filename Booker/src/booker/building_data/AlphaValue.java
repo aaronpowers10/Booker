@@ -50,11 +50,11 @@ public class AlphaValue
 	}
 
 	@Override
-	public void set(String value) throws BuildingDataException {
+	public void set(String value) throws BookerDataException {
 		if (alphaChecker.isAllowed(value)) {
 			this.value = value;
 		} else {
-			throw new BuildingDataException();
+			throw new BookerDataException("The value " + value + " is not allowed.");
 		}
 	}
 

@@ -55,11 +55,11 @@ public class RealValue
 	}
 
 	@Override
-	public void set(double value) throws BuildingDataException {
+	public void set(double value) throws BookerDataException {
 		if (realChecker.isAllowed(value)) {
 			this.value = value;
 		} else {
-			throw new BuildingDataException();
+			throw new BookerDataException("The value " + value + " is not valid.");
 		}
 	}
 

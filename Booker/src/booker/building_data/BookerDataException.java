@@ -18,13 +18,9 @@
 
 package booker.building_data;
 
-public class BuildingDataException extends RuntimeException {
+public class BookerDataException extends RuntimeException {
 
-	public BuildingDataException(){
-		super();
-	}
-
-	public BuildingDataException(String message){
+	public BookerDataException(String message){
 		super(message);
 	}
 

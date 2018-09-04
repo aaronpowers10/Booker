@@ -17,10 +17,20 @@
  */
 package booker.io;
 
-import booker.building_data.BookerProject;
+import otis.lexical.UpdateListener;
 
-public interface ProjectReadCompleteListener {
+public interface ProjectLoader {
 	
-	public void projectReadComplete(BookerProject project);
+	public default void loadInThread(String fileName){
+		ProjectLoadThread thread = new ProjectLoadThread(this,fileName);
+		thread.start();
+	}
+	
+	public void load(String fileName);
+	
+	public void addProjectReadCompleteListener(ProjectReadCompleteListener readCompleteListener);
+	
+	public void addUpdateListener(UpdateListener updateListener);
+	
 
 }

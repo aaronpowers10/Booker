@@ -43,13 +43,13 @@ public class FieldList
 		fields.remove(index);
 	}
 
-	public BookerField get(String name) throws BuildingDataException {
+	public BookerField get(String name) throws BookerDataException {
 		for (int i = 0; i < fields.size(); i++) {
 			if (fields.get(i).name().equals(name)) {
 				return fields.get(i);
 			}
 		}
-		throw new BuildingDataException();
+		throw new BookerDataException("The field " + name + " cannot be found.");
 	}
 
 	public int size() {

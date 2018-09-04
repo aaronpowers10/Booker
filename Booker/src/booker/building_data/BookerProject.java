@@ -18,15 +18,21 @@
 
 package booker.building_data;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
-public class BuildingProject implements NamespaceReferences<BookerObject> {
+import booker.io.OutputSequence;
+
+public class BookerProject implements NamespaceReferences<BookerObject> {
 
 	private NamespaceList<BookerObject> objects;
 	private NamespaceList<BookerObject> libraryObjects;
 	private ArrayList<NamespaceLoadListener<BookerObject>> objectLoadListeners;
 
-	public BuildingProject() {
+	public BookerProject() {
 		objects = new NamespaceList<BookerObject>();
 		libraryObjects = new NamespaceList<BookerObject>();
 		objectLoadListeners = new ArrayList<NamespaceLoadListener<BookerObject>>();
@@ -110,8 +116,8 @@ public class BuildingProject implements NamespaceReferences<BookerObject> {
 		return objects.getList(filter);
 	}
 
-	public BuildingProject copy(){
-		BuildingProject clone = new BuildingProject();
+	public BookerProject copy(){
+		BookerProject clone = new BookerProject();
 		for (int i = 0; i < size(); i++) {
 			clone.add(get(i).copy());
 		}
@@ -128,6 +134,25 @@ public class BuildingProject implements NamespaceReferences<BookerObject> {
 		for (int i = 0; i < objectLoadListeners.size(); i++) {
 			objectLoadListeners.get(i).notifyLoadingComplete(this);
 		}
+	}
+	
+	public void write(String fileName) {
+		Writer output;
+		OutputSequence outputSequence = new OutputSequence();
+
+		for (int i = 0; i < size(); i++) {
+			get(i).write(outputSequence);
+		}
+
+		try {
+			output = new FileWriter(new File(fileName));
+			output.write(outputSequence.getString());
+			output.close();
+			output = null;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

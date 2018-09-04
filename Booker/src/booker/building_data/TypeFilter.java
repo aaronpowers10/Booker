@@ -26,7 +26,7 @@ public class TypeFilter implements NamespaceFilter<BookerObject> {
 	}
 
 	@Override
-	public boolean filter(BookerObject object) throws BuildingDataException {
+	public boolean filter(BookerObject object) throws BookerDataException {
 		if(object.type().equals(type)){
 			return true;
 		} else {

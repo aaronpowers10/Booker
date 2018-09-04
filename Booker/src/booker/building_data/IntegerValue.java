@@ -42,7 +42,7 @@ public class IntegerValue implements FieldValue {
 	}
 
 	@Override
-	public void set(int value) throws BuildingDataException {
+	public void set(int value) throws BookerDataException {
 		this.value = value;
 	}
 

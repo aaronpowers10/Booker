@@ -15,12 +15,21 @@
  *  limitations under the License.
  *
  */
-package booker.io;
+package booker.building_data;
 
-import booker.building_data.BookerProject;
-
-public interface ProjectReadCompleteListener {
+public class TypeListCreator implements NamespaceListCreator<BookerObject>{
 	
-	public void projectReadComplete(BookerProject project);
+	private BookerProject project;
+	private String type;
+	
+	public TypeListCreator(BookerProject project, String type){
+		this.project = project;
+		this.type = type;
+	}
+
+	@Override
+	public NamespaceList<BookerObject> createList() {
+		return project.getTypeList(type);
+	}
 
 }

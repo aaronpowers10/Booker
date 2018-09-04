@@ -55,13 +55,14 @@ public class NamespaceList<T extends Namespace> {
 		return items.get(index);
 	}
 
-	public T get(String name) throws BuildingDataException {
+	public T get(String name) throws BookerDataException {
+		
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).name().equals(name)) {
 				return items.get(i);
 			}
 		}
-		throw new BuildingDataException();
+		throw new BookerDataException(name + " is not a member of the namespace.");
 	}
 
 	public boolean isMember(String name) {
@@ -107,7 +108,7 @@ public class NamespaceList<T extends Namespace> {
 		return -1;
 	}
 
-	public NamespaceList<T> getList(NamespaceFilter<T> filter) throws BuildingDataException {
+	public NamespaceList<T> getList(NamespaceFilter<T> filter) throws BookerDataException {
 		NamespaceList<T> list = new NamespaceList<T>();
 		for (int i = 0; i < items.size(); i++) {
 			if (filter.filter(items.get(i))) {

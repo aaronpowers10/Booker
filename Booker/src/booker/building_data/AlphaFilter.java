@@ -29,7 +29,7 @@ public class AlphaFilter implements NamespaceFilter<BookerObject> {
 	}
 
 	@Override
-	public boolean filter(BookerObject object) throws BuildingDataException {
+	public boolean filter(BookerObject object) throws BookerDataException {
 		if(object.hasField(fieldName)){
 			BookerField field = object.getField(fieldName);
 			if(field.getAsAlpha().value().equals(matchString)){

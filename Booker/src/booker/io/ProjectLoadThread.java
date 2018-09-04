@@ -17,10 +17,18 @@
  */
 package booker.io;
 
-import booker.building_data.BookerProject;
-
-public interface ProjectReadCompleteListener {
+public class ProjectLoadThread extends Thread{
 	
-	public void projectReadComplete(BookerProject project);
+		private String fileName;
+		private ProjectLoader loader;
+		
+		public ProjectLoadThread(ProjectLoader loader, String fileName){
+			this.fileName = fileName;
+			this.loader = loader;
+		}
+
+		public void run(){
+			loader.load(fileName);
+		}
 
 }

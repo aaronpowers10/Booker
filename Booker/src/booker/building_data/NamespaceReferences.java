@@ -20,7 +20,7 @@ package booker.building_data;
 
 public interface NamespaceReferences<T extends Namespace> {
 
-	public T get(String name) throws BuildingDataException;
+	public T get(String name) throws BookerDataException;
 
 	public void addLoadListener(NamespaceLoadListener<T> loadListener);
 

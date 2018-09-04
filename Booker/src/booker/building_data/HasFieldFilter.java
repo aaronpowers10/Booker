@@ -28,7 +28,7 @@ public class HasFieldFilter
 	}
 
 	@Override
-	public boolean filter(BookerObject object) throws BuildingDataException {
+	public boolean filter(BookerObject object) throws BookerDataException {
 		if (object.hasField(fieldName)) {
 			return true;
 		} else {
