@@ -17,7 +17,6 @@
  */
 package booker.building_data;
 
-import booker.building_data.RealValue.AllowAnyNumericChecker;
 import booker.io.InputFileWriter;
 import booker.io.NullWriter;
 import booker.io.OutputSequence;

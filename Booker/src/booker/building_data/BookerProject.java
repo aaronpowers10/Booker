@@ -123,6 +123,14 @@ public class BookerProject implements NamespaceReferences<BookerObject> {
 		}
 		return clone;
 	}
+	
+	public void addDeleteListener(NamespaceDeleteListener<BookerObject> listener) {
+		objects.addDeleteListener(listener);
+	}
+	
+	public void addAddListener(NamespaceAddListener<BookerObject> listener) {
+		objects.addAddListener(listener);
+	}
 
 	@Override
 	public void addLoadListener(NamespaceLoadListener<BookerObject> objectLoadListener) {

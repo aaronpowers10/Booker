@@ -229,5 +229,10 @@ public class BookerObject implements NamespaceDeleteListener<BookerObject>, Pars
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

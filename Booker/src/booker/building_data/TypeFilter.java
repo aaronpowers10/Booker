@@ -17,21 +17,37 @@
  */
 package booker.building_data;
 
+import java.util.ArrayList;
+
 public class TypeFilter implements NamespaceFilter<BookerObject> {
 	
-	private String type;
+	private String[] types;
 	
-	public TypeFilter(String type){
-		this.type = type;
+	public TypeFilter(String... types){
+		this.types = types;
+	}
+	
+	public TypeFilter(ArrayList<String> types) {
+		this.types = new String[types.size()];
+		this.types = types.toArray(this.types);
 	}
 
 	@Override
 	public boolean filter(BookerObject object) throws BookerDataException {
-		if(object.type().equals(type)){
+		if(checkVsTypes(object.type())){
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	private boolean checkVsTypes(String type) {
+		for(int i=0;i<types.length;i++) {
+			if(types[i].equals(type)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

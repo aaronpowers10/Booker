@@ -24,10 +24,12 @@ public class NamespaceList<T extends Namespace> {
 
 	private ArrayList<T> items;
 	private ArrayList<NamespaceDeleteListener<T>> deleteListeners;
+	private ArrayList<NamespaceAddListener<T>> addListeners;
 
 	public NamespaceList() {
 		items = new ArrayList<T>();
 		deleteListeners = new ArrayList<NamespaceDeleteListener<T>>();
+		addListeners = new ArrayList<NamespaceAddListener<T>>();
 	}
 
 	public void addDeleteListener(NamespaceDeleteListener<T> deleteListener) {
@@ -37,18 +39,28 @@ public class NamespaceList<T extends Namespace> {
 	public void removeDeleteListener(NamespaceDeleteListener<T> deleteListener) {
 		deleteListeners.remove(deleteListener);
 	}
+	
+	public void addAddListener(NamespaceAddListener<T> addListener) {
+		addListeners.add(addListener);
+	}
+
+	public void removeAddListener(NamespaceAddListener<T> addListener) {
+		addListeners.remove(addListener);
+	}
 
 	public void add(T item) {
 		items.add(item);
-
+		notifyAddListeners(item);
 	}
 
 	public void add(int index, T item) {
 		items.add(index, item);
+		notifyAddListeners(item);
 	}
 
 	public void add(T item, AddNamespaceStrategy<T> addStrategy) {
 		addStrategy.addToProject(item, this);
+		notifyAddListeners(item);
 	}
 
 	public T get(int index) {
@@ -98,6 +110,12 @@ public class NamespaceList<T extends Namespace> {
 			deleteListeners.get(i).itemDeleted(item);
 		}
 	}
+	
+	private void notifyAddListeners(T item) {
+		for(int i=0;i<addListeners.size();i++) {
+			addListeners.get(i).itemAdded(item);
+		}
+	}
 
 	public int indexOf(T item) {
 		for (int i = 0; i < items.size(); i++) {
@@ -116,6 +134,10 @@ public class NamespaceList<T extends Namespace> {
 			}
 		}
 		return list;
+	}
+	
+	public ArrayList<T> getAsArrayList(){
+		return items;
 	}
 	
 	public static <T extends Namespace> NamespaceList<T> create(NamespaceList<T> list) {
