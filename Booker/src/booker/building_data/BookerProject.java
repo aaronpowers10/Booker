@@ -162,5 +162,30 @@ public class BookerProject implements NamespaceReferences<BookerObject> {
 		}
 
 	}
+	
+	public boolean isReferenced(BookerObject object) {
+		for(int i=0;i<objects.size();i++) {
+			BookerObject projObject = objects.get(i);
+			for(int j=0;j<projObject.numFields();j++) {
+				BookerField field = projObject.getField(j);
+				if(field.type() == ValueType.LIST) {
+					ListValue listVal = field.getAsList();
+					for(int k=0;k<listVal.size();k++) {
+						FieldValue val = listVal.get(k);
+						if(val.type() == ValueType.OBJECT) {
+							if(val.getAsObject().value().equals(object)) {
+								return true;
+							}
+						}
+					}
+				} else if (field.type() == ValueType.OBJECT) {
+					if(field.getAsObject().value().equals(object)) {
+						return true;
+					}
+				} 
+			}
+		}
+		return false;
+	}
 
 }
